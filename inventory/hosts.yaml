@@ -1,0 +1,115 @@
+---
+R1:
+  hostname: 1.1.1.1
+  username: cisco
+  password: cisco
+  port:     22
+  platform: cisco_ios
+  groups:
+    - 'PE'
+  connection_options:
+    netmiko:
+      extras:
+        secret: 'cisco'
+  data:
+    router_id: 1.1.1.1
+    bgp:
+      asn: 65000
+      peers:
+        - ip: 2.2.2.2
+          customers:
+            - ACME
+    customers:
+      - name: ACME
+        intf: FastEthernet 0/0
+        addr: "10.0.1.1 255.255.255.252"
+        ospf:  100
+        rd:   "100:110"
+        rt:   "100:1000"
+R2:
+  hostname: 2.2.2.2
+  username: cisco
+  password: cisco
+  port:     22
+  platform: cisco_ios
+  groups:
+    - 'PE'
+  connection_options:
+    netmiko:
+      extras:
+        secret: 'cisco'
+  data:
+    router_id: 2.2.2.2
+    bgp:
+      asn: 65000
+      peers:
+        - ip: 1.1.1.1
+          customers:
+            - ACME
+        - ip: 5.5.5.5
+          customers:
+            - BETA
+    customers:
+      - name: ACME
+        intf: FastEthernet 0/0
+        addr: "10.0.1.1 255.255.255.252"
+        ospf: 100
+        rd:   "100:110"
+        rt:   "100:1000"
+      - name: BETA
+        intf: FastEthernet 0/1
+        addr: "10.0.1.1 255.255.255.252"
+        ospf: 200
+        rd:   "200:220"
+        rt:   "200:2000"
+R3:
+  hostname: 3.3.3.3
+  username: cisco
+  password: cisco
+  port:     22
+  platform: cisco_ios
+  groups:
+    - 'P'
+  connection_options:
+    netmiko:
+      extras:
+        secret: 'cisco'
+R4:
+  hostname: 4.4.4.4
+  username: cisco
+  password: cisco
+  port:     22
+  platform: cisco_ios
+  groups:
+    - 'P'
+  connection_options:
+    netmiko:
+      extras:
+        secret: 'cisco'
+R5:
+  hostname: 5.5.5.5
+  username: cisco
+  password: cisco
+  port:     22
+  platform: cisco_ios
+  groups:
+    - 'PE'
+  connection_options:
+    netmiko:
+      extras:
+        secret: 'cisco'
+  data:
+    router_id: 5.5.5.5
+    bgp:
+      asn: 65000
+      peers:
+        - ip: 2.2.2.2
+          customers:
+            - BETA
+    customers:
+      - name: BETA
+        intf: FastEthernet 0/0
+        addr: "10.0.1.1 255.255.255.252"
+        ospf: 200
+        rd:   "200:220"
+        rt:   "200:2000"
