@@ -1,0 +1,4 @@
+{% for neighbor in peers %}
+router bgp {{ neighbor.ip }}
+ no neighbor {{ neighbor.ip }} remote-as {{ asn }}
+{% endfor %}

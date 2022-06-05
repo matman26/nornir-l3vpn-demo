@@ -1,0 +1,7 @@
+{% for customer in host.data.customers %}
+ip vrf {{ customer.name }}
+ rd {{ customer.rd }}
+ route-target export {{ customer.rt }}
+ route-target import {{ customer.rt }}
+!
+{% endfor %}
