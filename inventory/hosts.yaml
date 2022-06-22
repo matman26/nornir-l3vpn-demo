@@ -1,16 +1,24 @@
 ---
 R1:
+  # === Variaveis reservadas pelo nornir para acesso
+  #     ao device
   hostname: 1.1.1.1
   username: cisco
   password: cisco
   port:     22
   platform: cisco_ios
+  # - Grupos de device. Modelo de heranca semelhante
+  #   ao do ansible
   groups:
     - 'PE'
+  # - Configuracao da senha de enable do cisco
   connection_options:
     netmiko:
       extras:
         secret: 'cisco'
+  # ===
+  # Estrutura de dados "livre" para ser usada
+  # dentro de tasks
   data:
     router_id: 1.1.1.1
     bgp:
@@ -22,10 +30,11 @@ R1:
     customers:
       - name: ACME
         intf: FastEthernet 0/0
-        addr: "10.0.1.1 255.255.255.252"
-        ospf:  100
-        rd:   "100:110"
-        rt:   "100:1000"
+        addr: "10.0.1.2 255.255.255.252"
+        ospf: 100
+        rid:  172.16.10.1
+        rd:   "65000:1"
+        rt:   "65000:1"
 R2:
   hostname: 2.2.2.2
   username: cisco
@@ -52,16 +61,18 @@ R2:
     customers:
       - name: ACME
         intf: FastEthernet 0/0
-        addr: "10.0.1.1 255.255.255.252"
+        addr: "10.0.2.1 255.255.255.252"
         ospf: 100
-        rd:   "100:110"
-        rt:   "100:1000"
+        rid:  172.16.20.1
+        rd:   "65000:1"
+        rt:   "65000:1"
       - name: BETA
-        intf: FastEthernet 0/1
-        addr: "10.0.1.1 255.255.255.252"
+        intf: Serial 2/0
+        addr: "10.0.2.1 255.255.255.252"
         ospf: 200
-        rd:   "200:220"
-        rt:   "200:2000"
+        rid:  172.16.20.2
+        rd:   "65000:2"
+        rt:   "65000:2"
 R3:
   hostname: 3.3.3.3
   username: cisco
@@ -92,12 +103,12 @@ R5:
   password: cisco
   port:     22
   platform: cisco_ios
-  groups:
-    - 'PE'
   connection_options:
     netmiko:
       extras:
         secret: 'cisco'
+  groups:
+    - 'PE'
   data:
     router_id: 5.5.5.5
     bgp:
@@ -111,5 +122,6 @@ R5:
         intf: FastEthernet 0/0
         addr: "10.0.1.1 255.255.255.252"
         ospf: 200
-        rd:   "200:220"
-        rt:   "200:2000"
+        rid:  172.16.50.2
+        rd:   "65000:2"
+        rt:   "65000:2"

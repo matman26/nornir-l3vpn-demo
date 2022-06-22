@@ -1,0 +1,10 @@
+{% for customer in host.data.customers %}
+no router ospf {{ customer.ospf }} vrf {{ customer.name }}
+!
+interface {{ customer.intf }}
+  no ip vrf forwarding {{ customer.name }}
+  no ip address {{ customer.addr }}
+  no ip ospf {{ customer.ospf }} area 0
+  shutdown
+!
+{% endfor %}

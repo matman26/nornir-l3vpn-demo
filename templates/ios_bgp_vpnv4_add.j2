@@ -1,4 +1,5 @@
-{% for neighbor in host.data.bgp.peers %}
+{% if host.data.bgp.peers %}
+ {% for neighbor in host.data.bgp.peers %}
 {% set bgp_asn = host.data.bgp.asn %}
 router bgp {{ bgp_asn }}
  neighbor {{ neighbor.ip }} remote-as {{ bgp_asn }}
@@ -7,4 +8,5 @@ router bgp {{ bgp_asn }}
   neighbor {{ neighbor.ip }} activate
  !
 !
-{% endfor %}
+ {% endfor %}
+{% endif %}

@@ -1,31 +1,33 @@
 from nornir.core.task import Task, Result, MultiResult
 
 def apply_template(task: Task, results: MultiResult) -> Result:
-    # === Carrega o TEMPLATE em memoria do dicionario com resultados
+    # === Loads the templated configuration from the device's
+    # === result attribute
     template   = results[task.host.name].result
 
-    # === Transforma as linhas do template em uma lista de strings
-    # === (compativel com o send_config_set)
-    config_set = [ config.strip() for config in template.split('\n') ]
+    # === Transforms template lines into a list of strings
+    # === (compatible with netmiko's send_config_set)
+    config_set = template.splitlines()
 
-    # === Inicializa uma conexao NETMIKO com o device
+    # === Initializes a Netmiko connection to the device
     connection = task.host.get_connection('netmiko', task.nornir.config)
 
-    # === Checa se a conexao esta morta, se estiver, reconecta
+    # === Checks if the connection is alive. If not, establish
+    # === a new one
     if not connection.is_alive():
         connection.establish_connection()
 
-    # === Habilita Enable da caixa e modo de Config
+    # === Enters the device's enable and config mode (for cisco)
     connection.enable()
     connection.config_mode()
 
-    # === Envia configuracao templatizada ao device
+    # === Sends the templated configuration to the device
     result_data = connection.send_config_set(config_set)
 
-    # === Desconecta a sessao remota
+    # === Disconnects the remote session
     connection.disconnect()
 
-    # === Retorna o resultado no formato convencional
+    # === Returns execution results
     return Result(
         result=result_data,
         host=task.host,

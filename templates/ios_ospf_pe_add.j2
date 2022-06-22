@@ -1,6 +1,7 @@
-{% for customer in host.data.customers %}
+{% if host.data.customers %}
+ {% for customer in host.data.customers %}
 router ospf {{ customer.ospf }} vrf {{ customer.name }}
-  router-id {{ host.data.router_id }}
+  router-id {{ customer.rid }}
 !
 interface {{ customer.intf }}
   ip vrf forwarding {{ customer.name }}
@@ -8,4 +9,5 @@ interface {{ customer.intf }}
   ip ospf {{ customer.ospf }} area 0
   no shut
  !
-{% endfor %}
+ {% endfor %}
+{% endif %}

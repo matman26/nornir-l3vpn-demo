@@ -1,0 +1,10 @@
+(undo-tree-save-format-version . 1)
+"117b18af842e24daaaadfbc67102525d05adc4f7"
+[nil nil nil nil (25244 43459 237787 557000) 0 nil]
+([nil nil ((1 . 33) (t 25244 41195 964219 40000)) nil (25244 43459 237786 456000) 0 nil])
+([nil nil ((nil rear-nonsticky nil 57 . 58) (#("
+" 0 1 (fontified nil)) . -70) (undo-tree-id1 . -1) (57 . 71) 33) nil (25244 43459 237785 387000) 0 nil])
+([nil nil ((46 . 55) (#("vrf" 0 3 (face font-lock-variable-name-face fontified t)) . 46)) nil (25244 43459 237781 437000) 0 nil])
+([nil nil ((#("_" 0 1 (face font-lock-variable-name-face fontified t)) . 55) (undo-tree-id0 . 1)) nil (25244 43459 237777 843000) 0 nil])
+([nil current ((20 . 30) (t 25244 43459 378156 651000)) nil (25246 34709 801218 277000) 0 nil])
+nil

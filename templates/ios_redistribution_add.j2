@@ -1,5 +1,6 @@
-{% for customer in host.data.customers %}
-{% set bgp_asn = host.data.bgp.asn %}
+{% if host.data.customers %}
+ {% for customer in host.data.customers %}
+ {% set bgp_asn = host.data.bgp.asn %}
 router bgp {{ bgp_asn }}
  address-family ipv4 vrf {{ customer.name }}
   redistribute ospf {{ customer.ospf }}
@@ -8,4 +9,5 @@ router bgp {{ bgp_asn }}
 router ospf {{ customer.ospf }} vrf {{ customer.name }}
  redistribute bgp {{ bgp_asn }} subnets
 !
-{% endfor %}
+ {% endfor %}
+{% endif %}

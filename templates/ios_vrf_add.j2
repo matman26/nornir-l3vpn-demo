@@ -1,7 +1,15 @@
-{% for customer in host.data.customers %}
+{% if host.data.customers %}
+ {% for customer in host.data.customers %}
+!!!! CONFIG {{ customer.name }}
 ip vrf {{ customer.name }}
  rd {{ customer.rd }}
  route-target export {{ customer.rt }}
  route-target import {{ customer.rt }}
 !
-{% endfor %}
+interface {{ customer.intf }}
+ ip vrf forwarding {{ customer.name }}
+ ip address {{ customer.addr }}
+ no shutdown
+!
+ {% endfor %}
+{% endif %}
